@@ -1,0 +1,16 @@
+{
+  "name": "curvvtech-backend",
+  "version": "1.0.0",
+  "description": "This is an backend assignment of curvvtech to Build a backend system for a simplified Smart Device Management Platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Asif Hussain",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
