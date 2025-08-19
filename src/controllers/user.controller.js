@@ -2,13 +2,13 @@ import UserServices from "../services/user.services.js";
 
 const userServices = new UserServices();
 
-const createUser = async (req, res) => {
+const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
     const existingUser = await userServices.findByemail(email);
     if (existingUser)
-      return res.json({ message: "User already exists with this email" });
-    await userServices.createUser({
+      return res.status(201).json({ message: "User already exists with this email" });
+    await userServices.registerUser({
       name,
       email,
       password,
@@ -20,8 +20,24 @@ const createUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Error creating user:", error);
-    throw new Error("Failed to create or update user");
+    throw new Error("Failed to register new user");
   }
 };
 
-export { createUser };
+const loginUser = async(req,res)=>{
+    try {
+        const { email, password } = req.body;
+        const data = await userServices.login({ email, password })
+        return res.status(200).json({
+            success: true,
+            token : data.token,
+            user : data.user,
+
+        }) 
+    } catch (error) {
+        console.error("Error creating user:", error);
+    throw new Error("Failed to login user");
+    }
+}
+
+export { registerUser, loginUser };

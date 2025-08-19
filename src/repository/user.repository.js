@@ -11,10 +11,17 @@ class UserRepository {
     }
   }
 
-  async findByemail(email){
-    return await User.findOne({email})
+  async findByemail(email) {
+    return await User.findOne({ email });
+  }
+
+  async login(){
+    try {
+        
+    } catch (error) {
+        
+    }
   }
 }
-
 
 export default UserRepository;
