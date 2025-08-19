@@ -1,13 +1,27 @@
-import UserRepository from "../repository/user.repository.js";
+import UserServices from "../services/user.services.js";
 
-const userRepository = new UserRepository()
+const userServices = new UserServices();
 
-const createUser = async(req,res)=>{
-    try {
-      const { name, email, password, role } = req.body;
-        const user = await userRepository.createUser({ name, email, password, role })
-    } catch (error) {
-         console.error("Error creating user:", error);
-      throw new Error("Failed to create or update user");
-    }
-}
+const createUser = async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+    const existingUser = await userServices.findByemail(email);
+    if (existingUser)
+      return res.json({ message: "User already exists with this email" });
+    await userServices.createUser({
+      name,
+      email,
+      password,
+      role,
+    });
+    res.json({
+      success: true,
+      message: "User registered successfully",
+    });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw new Error("Failed to create or update user");
+  }
+};
+
+export { createUser };

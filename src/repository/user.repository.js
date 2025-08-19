@@ -1,4 +1,4 @@
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 
 class UserRepository {
   async createUser(data) {
@@ -6,9 +6,13 @@ class UserRepository {
       const user = await User.create(data);
       return user;
     } catch (error) {
-      console.error("Error creating user:", error);
-      throw new Error("Failed to create or update user");
+      console.error("Error creating user:", error.message);
+      throw error;
     }
+  }
+
+  async findByemail(email){
+    return await User.findOne({email})
   }
 }
 
